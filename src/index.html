@@ -4,49 +4,47 @@
      <title>WebProject</title>
 
      <style>
-
         .userInputs
         {
            font-size: 150%;
            background-color:  #c0904d;
         }
 
-
     </style>
-
-
-
 
 </head>
 <body>
 
-    <!-- USERNAME -->
-    <p class="userInputs">Give a username:</p>
-    <input type="text" id="usernameId" placeholder="Type a username">
-    <button type="submit">Sumbit</button>
-    <br><br>
+
+    <form action="giaBash.php"  method="POST">
+      <!-- USERNAME -->
+      <p class="userInputs">Give a username:</p>
+      <input type="text" id="usernameId" name="username" placeholder="Type a username">
+
+      <br><br>
+
+
+      <!-- EMAIL -->
+      <p class="userInputs" >Give your email</p>
+      <input type="email" id="emailId" name="email" placeholder="Type your email address">
+      <br><br>
 
 
 
-    <!-- PASSWORD -->
-    <p class="userInputs">Give a password.It should contain at least :
-          8 characters,one upper case letter,one number and a symbol(#,$,*,&,@)
-    </p>
-    <input type="password" id="passwordId" placeholder="Type a password">
+      <!-- PASSWORD -->
+      <p class="userInputs">Give a password.It should contain at least :
+          8 characters,one upper case letter,one number and a symbol(#,$,*,@)
+      </p>
+      <input type="password" id="passwordId" name="password" placeholder="Type a password">
 
-    <p id="StrengthMessage">Weak</p>
+      <p id="StrengthMessage">Weak</p>
 
-    <!-- The button to submit the password will only show up if the password is strong -->
-    <button type="submit" id="passwordButton" style = "display:none;">Sumbit</button>
-    <br>
+      <!-- The button to submit the password will only show up if the password is strong -->
+      <button type="submit" id="passwordButton" name="submit" style = "display:none;">Sumbit</button>
+      <br>
 
 
-
-    <!-- EMAIL -->
-    <p class="userInputs" >Give your email</p>
-    <input type="text" id="emailId" placeholder="Type your email address">
-    <button type="submit">Sumbit</button>
-    <br><br>
+    </form>
 
 
     <script>
