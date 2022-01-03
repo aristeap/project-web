@@ -16,19 +16,17 @@
 <body>
 
 
-    <form action="giaBash.php"  method="POST">
+    <form  method="POST" action="loginsthBash.php">
       <!-- USERNAME -->
       <p class="userInputs">Give a username:</p>
       <input type="text" id="usernameId" name="username" placeholder="Type a username">
 
       <br><br>
 
-
       <!-- EMAIL -->
       <p class="userInputs" >Give your email</p>
       <input type="email" id="emailId" name="email" placeholder="Type your email address">
       <br><br>
-
 
 
       <!-- PASSWORD -->
@@ -39,8 +37,11 @@
 
       <p id="StrengthMessage">Weak</p>
 
-      <!-- The button to submit the password will only show up if the password is strong -->
-      <button type="submit" id="passwordButton" name="submit" style = "display:none;">Sumbit</button>
+      <!-- The button or the link to login or signup will only show up if the password is strong -->
+      <button type="submit" id="passwordButton" formaction="loginsthBash.php" style = "display:none;">Login</button><br>
+      <button type="submit" formaction="signupsthBash.php" id="signupId" style = "display:none;">SignUp</button>
+
+
       <br>
 
 
@@ -49,9 +50,15 @@
 
     <script>
       let timeout;
-      let forTheButton = document.getElementById('passwordButton');
+      //To display the Login button
+      let forTheLoginButton = document.getElementById('passwordButton');
+      //To display the sign up button
+      let forTheSignUpLink = document.getElementById('signupId');
+      //To display the weak or strong message for the password
       let strengthBadge = document.getElementById('StrengthMessage');
+      //It takes the password we wrote
       let password = document.getElementById('passwordId');
+      //The regular expression to test the password's strength
       let strongPassword = new RegExp ('(?=.*[A-z])(?=.*[0-9])(?=.*[^A-za-z0-9])(?=.{8,})');
 
       function passwordFunction(passwordParameter)
@@ -62,7 +69,9 @@
                 strengthBadge.textContent = 'Strong';
                 if(strengthBadge.textContent == 'Strong')
                     {
-                          forTheButton.style.display = "block";
+                          forTheLoginButton.style.display = "block";
+                          forTheSignUpLink.style.display = "block";
+
                     }else
                     {
                            forTheButton.style.display = "none";
@@ -102,7 +111,6 @@
 
 
     </script>
-
 
 </body>
 </html>
