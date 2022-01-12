@@ -25,13 +25,11 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="./leaflet-search.src.js"></script>
 
+  <!-- Κάναμε copy-paste τα περιεχόμενα του JSON starting_pois.json σε μια μεταβλητή (την const POIs) & με αυτό το script τη φορτώνουμε -->
+  <script src="./POIs.js"></script>
+
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      // TODO: read POIs
-      var data = [
-        {"loc":[38.2466877,  21.7352181], "title": "Zizu"},
-      ];
-
       var map = new L.Map('map', {zoom: 16, center: [38.2462420, 21.7350847] });            // set view
       map.addLayer(new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));  // base layer
 
@@ -57,10 +55,10 @@
             Add markers
       ========================*/
 
-      for(i in data) {
-        var title   = data[i].title;                                      // value searched
-        var loc     = data[i].loc;                                        // position found
-        var marker  = new L.Marker(new L.latLng(loc), {title: title});    // property searched
+      for(i in POIs) {
+        var title   = POIs[i].name;                                      // value searched
+        var coord   = POIs[i].coordinates;                                        // position found
+        var marker  = new L.Marker([coord.lat, coord.lng], {title: title});    // property searched
         marker.bindPopup('title: '+ title);
         markersLayer.addLayer(marker);
       }
