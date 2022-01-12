@@ -1,1 +1,83 @@
-hello adsadsaadsdas
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>The map</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link rel="stylesheet" href="./leaflet-search.src.css"/>
+
+  <style>
+        #map {
+            /* size of map */
+            height: 500px;
+            width: 800px;
+        }
+  </style>
+
+</head>
+
+<body>
+  <div id = "map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="./leaflet-search.src.js"></script>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      // TODO: read POIs
+      var data = [
+        {"loc":[38.2466877,  21.7352181], "title": "Zizu"},
+      ];
+
+      var map = new L.Map('map', {zoom: 16, center: [38.2462420, 21.7350847] });            // set view
+      map.addLayer(new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));  // base layer
+
+      var markersLayer = new L.LayerGroup();  //layer contain searched elements
+      map.addLayer(markersLayer);
+
+      var controlSearch = new L.Control.Search({
+        position:'topright',
+        layer: markersLayer,
+        initial: true,
+        zoom: 25,
+        marker: false,
+        autoResize: true
+      }).on('search:locationfound', function (e) {
+           console.log(e);
+
+            // TODO: show marker!
+      });
+
+      map.addControl(controlSearch);
+
+      /*=======================
+            Add markers
+      ========================*/
+
+      for(i in data) {
+        var title   = data[i].title;                                      // value searched
+        var loc     = data[i].loc;                                        // position found
+        var marker  = new L.Marker(new L.latLng(loc), {title: title});    // property searched
+        marker.bindPopup('title: '+ title);
+        markersLayer.addLayer(marker);
+      }
+
+      /* Create Plateia Gewrgiou marker */
+      var marker2 = L.marker ([38.246242, 21.7350847], { draggable: "true", title: "Plateia Gewrgiou"});
+      marker2.addTo(markersLayer);
+
+      /*popup*/
+      marker2.bindPopup("<b>Πλατεία Γεωργίου</b><br>Ektimisi episk");
+      marker2.on("click", clickMarker);
+
+      function clickMarker(event) {
+        this.getPopup().setLatLng(event.latlng).setContent("Συνετεταγμένες σημείου: " + event.latlng.toString());
+      }
+    });
+
+  </script>
+</body>
+</html>
