@@ -15,6 +15,15 @@
             height: 500px;
             width: 800px;
         }
+
+        .leaflet-marker-pane
+        {
+          visibility: hidden;
+        }
+        .leaflet-shadow-pane
+        {
+          visibility: hidden;
+        }
   </style>
 
 </head>
@@ -30,12 +39,22 @@
 
   <script>
     window.addEventListener("DOMContentLoaded", () => {
-      var map = new L.Map('map', {zoom: 16, center: [38.2462420, 21.7350847] });            // set view
+      // 
+      // Create map
+      // 
+      var map = new L.Map('map', {zoom: 15, center: [38.2370706, 21.7345796] });            // set view
       map.addLayer(new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));  // base layer
 
-      var markersLayer = new L.LayerGroup();  //layer contain searched elements
+      // 
+      // Markers Layers
+      // 
+      var markersLayer = new L.LayerGroup();
+      
       map.addLayer(markersLayer);
 
+      // 
+      // Search Bar
+      // 
       var controlSearch = new L.Control.Search({
         position:'topright',
         layer: markersLayer,
@@ -44,9 +63,29 @@
         marker: false,
         autoResize: true
       }).on('search:locationfound', function (e) {
-           console.log(e);
+          console.log(e);
 
-            // TODO: show marker!
+          // result 
+          var title = e.text;
+          var marker = e.layer;
+
+          // ===================
+          // Make marker visible
+          // ===================
+
+          // all possible html-elements that are markers
+          var markers = document.getElementsByClassName('leaflet-interactive');
+
+          // Αναζήτηση για το marker που έχει τίτλο 'title'
+          for (i in markers)
+          {
+            // αν το βρούμε
+            if (markers[i].title == title)
+            {
+              // το κάνουμε ορατό
+              markers[i].style.visibility = 'visible';
+            }
+          }
       });
 
       map.addControl(controlSearch);
@@ -56,25 +95,29 @@
       ========================*/
 
       for(i in POIs) {
-        var title   = POIs[i].name;                                      // value searched
-        var coord   = POIs[i].coordinates;                                        // position found
-        var marker  = new L.Marker([coord.lat, coord.lng], {title: title});    // property searched
-        marker.bindPopup('title: '+ title);
+        var title   = POIs[i].name;                                             // value searched
+        var coord   = POIs[i].coordinates;                                      // position found
+        var marker  = new L.Marker([coord.lat, coord.lng], {title: title});     // property searched
+        var visits  = 1;
+        marker.bindPopup(title);
+        marker.on('click', clickMarker);
+
+        function clickMarker(event) {
+          this.getPopup().setLatLng(event.latlng).setContent('Πρόβλεψη Επισκεψιμότητας: ' + visits);
+        }
+
         markersLayer.addLayer(marker);
       }
-
-      /* Create Plateia Gewrgiou marker */
-      var marker2 = L.marker ([38.246242, 21.7350847], { draggable: "true", title: "Plateia Gewrgiou"});
-      marker2.addTo(markersLayer);
-
-      /*popup*/
-      marker2.bindPopup("<b>Πλατεία Γεωργίου</b><br>Ektimisi episk");
-      marker2.on("click", clickMarker);
-
-      function clickMarker(event) {
-        this.getPopup().setLatLng(event.latlng).setContent("Συνετεταγμένες σημείου: " + event.latlng.toString());
-      }
     });
+
+
+// /* Create Plateia Gewrgiou marker */
+// var marker2 = L.marker ([38.246242, 21.7350847], { draggable: "true", title: "Plateia Gewrgiou"});
+// marker2.addTo(searcheableMarkersLayer);
+
+// /*popup*/
+// marker2.bindPopup("<b>Πλατεία Γεωργίου</b><br>Ektimisi episk");
+// marker2.on("click", clickMarker);
 
   </script>
 </body>
