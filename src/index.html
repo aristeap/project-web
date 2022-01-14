@@ -92,11 +92,18 @@
               current_populartimes_data = populartimes[day - 1].data;
               // console.log('pop_data: ', current_populartimes_data);
 
+              // όλοι οι επισκέπτες της μέρας
+              visitors = 0;
+              for (i in current_populartimes_data)
+              {
+                visitors += current_populartimes_data[i];
+              }
+
               // Πρόβλεψη
               now = current_populartimes_data[hour - 1];
               p1 = current_populartimes_data[hour];
               p2 = current_populartimes_data[hour + 1];
-              prediction = p1 + p2;
+              prediction = Math.round(p1 + p2 / visitors);
 
               // Mέσος Όρος
               if (hour >= 3)
@@ -107,7 +114,7 @@
                 {
                   sum += current_populartimes_data[i];
                 }
-                median = sum / i;
+                median = Math.round(sum / i);
               }
 
               break;
@@ -127,6 +134,43 @@
             // αν το βρούμε
             if (markers[i].title == title)
             {
+              let myCustomColour;
+
+              if (prediction >= 0 && prediction <= 32)
+              {
+                myCustomColour = "green";
+              }
+              else if (prediction >= 33 && prediction <= 65)
+              {
+                myCustomColour = "yellow";
+              }
+              else if (prediction >= 66 && prediction <= 100)
+              {
+                myCustomColour = "red";
+              }
+
+              const markerHtmlStyles = `
+                background-color: ${myCustomColour};
+                width: 3rem;
+                height: 3rem;
+                display: block;
+                left: -1.5rem;
+                top: -1.5rem;
+                position: relative;
+                border-radius: 3rem 3rem 0;
+                transform: rotate(45deg);
+                border: 1px solid #FFFFFF`;
+
+              const icon = L.divIcon({
+                className: "my-custom-pin",
+                iconAnchor: [0, 24],
+                labelAnchor: [-6, 0],
+                popupAnchor: [0, -36],
+                html: `<span style="${markerHtmlStyles}" />`
+              })
+
+              marker.setIcon(icon);
+
               // το κάνουμε ορατό
               markers[i].style.visibility = 'visible';
             }
@@ -150,7 +194,7 @@
         function clickMarker(event) {
           // console.log('Τώρα έρχονται πάντα: ', now, ' Ενώ στις επόμενες: ', p1, ', ', p2);
 
-          content = '<b>' + title + '</b><br>' + 'Προβλέπουμε κίνηση: ' + prediction + ' άτομα στις 2 επόμενες ώρες και <br>Μέση Επισκεψιμότητα (έως 2 ώρες πριν): ' + Math.round(median) + ' άτομα';
+          content = '<b>' + title + '</b><br>' + 'Προβλέπουμε κίνηση: ' + prediction + ' άτομα στις 2 επόμενες ώρες και <br>Μέση Επισκεψιμότητα (έως 2 ώρες πριν): ' + median + ' άτομα';
 
           this.getPopup().setLatLng(event.latlng).setContent(content);
         }
