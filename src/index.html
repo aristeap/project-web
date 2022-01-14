@@ -38,6 +38,7 @@
   <script src="./POIs.js"></script>
 
   <script>
+    // Ο κώδικας μας θα τρέξει μόλις είναι σίγουρο ότι έχει φορτώσει το DOM
     window.addEventListener("DOMContentLoaded", () => {
       // 
       // Create map
@@ -65,9 +66,53 @@
       }).on('search:locationfound', function (e) {
           console.log(e);
 
-          // result 
+          // result
           var title = e.text;
           var marker = e.layer;
+
+          // =====================
+          // Marker Contents
+          // =====================
+
+          prediction = 0;
+          median = 0;
+
+          // βρίσκουμε το POI που αντιστοιχεί στο marker 
+          for (item in POIs)
+          {
+            if (POIs[item].name == title)
+            {
+              populartimes = POIs[item].populartimes;
+
+              const d   = new Date();
+              let hour  = d.getHours();
+              let day   = d.getDay();
+
+              // populartimes of the current day
+              current_populartimes_data = populartimes[day - 1].data;
+              // console.log('pop_data: ', current_populartimes_data);
+
+              // Πρόβλεψη
+              now = current_populartimes_data[hour - 1];
+              p1 = current_populartimes_data[hour];
+              p2 = current_populartimes_data[hour + 1];
+              prediction = p1 + p2;
+
+              // Mέσος Όρος
+              if (hour >= 3)
+              {
+                i = 0;
+                sum = 0;
+                for (; i < hour - 2; i++)
+                {
+                  sum += current_populartimes_data[i];
+                }
+                median = sum / i;
+              }
+
+              break;
+            }
+          }
 
           // ===================
           // Make marker visible
@@ -90,9 +135,9 @@
 
       map.addControl(controlSearch);
 
-      /*=======================
-            Add markers
-      ========================*/
+      // =======================
+      //    Add markers
+      // =======================
 
       for(i in POIs) {
         var title   = POIs[i].name;                                             // value searched
@@ -103,7 +148,11 @@
         marker.on('click', clickMarker);
 
         function clickMarker(event) {
-          this.getPopup().setLatLng(event.latlng).setContent('Πρόβλεψη Επισκεψιμότητας: ' + visits);
+          // console.log('Τώρα έρχονται πάντα: ', now, ' Ενώ στις επόμενες: ', p1, ', ', p2);
+
+          content = '<b>' + title + '</b><br>' + 'Προβλέπουμε κίνηση: ' + prediction + ' άτομα στις 2 επόμενες ώρες και <br>Μέση Επισκεψιμότητα (έως 2 ώρες πριν): ' + Math.round(median) + ' άτομα';
+
+          this.getPopup().setLatLng(event.latlng).setContent(content);
         }
 
         markersLayer.addLayer(marker);
