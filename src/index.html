@@ -50,7 +50,6 @@
       // Markers Layers
       // 
       var markersLayer = new L.LayerGroup();
-      
       map.addLayer(markersLayer);
 
       // 
@@ -82,6 +81,8 @@
           {
             if (POIs[item].name == title)
             {
+              console.log('POI: ', POIs[item].name, 'title: ', title);
+
               populartimes = POIs[item].populartimes;
 
               const d   = new Date();
@@ -116,8 +117,6 @@
                 }
                 median = Math.round(sum / i);
               }
-
-              break;
             }
           }
 
@@ -125,54 +124,69 @@
           // Make marker visible
           // ===================
 
+          marker.on('click', clickMarker);
+
+          function clickMarker(event) {
+            // Άνοιξε το popup σε κλικ
+            this.getPopup().setLatLng(event.latlng).openPopup();
+          }
+
           // all possible html-elements that are markers
           var markers = document.getElementsByClassName('leaflet-interactive');
 
           // Αναζήτηση για το marker που έχει τίτλο 'title'
-          for (i in markers)
+          for (m in markers)
           {
             // αν το βρούμε
-            if (markers[i].title == title)
+            if (markers[m].title == title)
             {
-              let myCustomColour;
+              console.log('MARKERS: ', markers[m].title, ' title: ', title);
 
-              if (prediction >= 0 && prediction <= 32)
-              {
-                myCustomColour = "green";
-              }
-              else if (prediction >= 33 && prediction <= 65)
-              {
-                myCustomColour = "yellow";
-              }
-              else if (prediction >= 66 && prediction <= 100)
-              {
-                myCustomColour = "red";
-              }
+              // Δημιουργούμε το περιεχόμενο του popup
+              let content = '<b>' + title + '</b><br>' + 'Προβλέπουμε κίνηση: ' + prediction + ' άτομα στις 2 επόμενες ώρες και <br>Μέση Επισκεψιμότητα (έως 2 ώρες πριν): ' + median + ' άτομα';
+              let popup = L.popup();
+              popup.setContent(content);
+              marker.bindPopup(popup);
 
-              const markerHtmlStyles = `
-                background-color: ${myCustomColour};
-                width: 3rem;
-                height: 3rem;
-                display: block;
-                left: -1.5rem;
-                top: -1.5rem;
-                position: relative;
-                border-radius: 3rem 3rem 0;
-                transform: rotate(45deg);
-                border: 1px solid #FFFFFF`;
+              // let myCustomColour;
 
-              const icon = L.divIcon({
-                className: "my-custom-pin",
-                iconAnchor: [0, 24],
-                labelAnchor: [-6, 0],
-                popupAnchor: [0, -36],
-                html: `<span style="${markerHtmlStyles}" />`
-              })
+              // if (prediction >= 0 && prediction <= 32)
+              // {
+              //   myCustomColour = "green";
+              // }
+              // else if (prediction >= 33 && prediction <= 65)
+              // {
+              //   myCustomColour = "yellow";
+              // }
+              // else if (prediction >= 66 && prediction <= 100)
+              // {
+              //   myCustomColour = "red";
+              // }
 
-              marker.setIcon(icon);
+              // const markerHtmlStyles = `
+              //   background-color: ${myCustomColour};
+              //   width: 3rem;
+              //   height: 3rem;
+              //   display: block;
+              //   left: -1.5rem;
+              //   top: -1.5rem;
+              //   position: relative;
+              //   border-radius: 3rem 3rem 0;
+              //   transform: rotate(45deg);
+              //   border: 1px solid #FFFFFF`;
+
+              // const icon = L.divIcon({
+              //   className: "my-custom-pin",
+              //   iconAnchor: [0, 24],
+              //   labelAnchor: [-6, 0],
+              //   popupAnchor: [0, -36],
+              //   html: `<span style="${markerHtmlStyles}" />`
+              // })
+
+              // marker.setIcon(icon);
 
               // το κάνουμε ορατό
-              markers[i].style.visibility = 'visible';
+              markers[m].style.visibility = 'visible';
             }
           }
       });
@@ -187,31 +201,9 @@
         var title   = POIs[i].name;                                             // value searched
         var coord   = POIs[i].coordinates;                                      // position found
         var marker  = new L.Marker([coord.lat, coord.lng], {title: title});     // property searched
-        var visits  = 1;
-        marker.bindPopup(title);
-        marker.on('click', clickMarker);
-
-        function clickMarker(event) {
-          // console.log('Τώρα έρχονται πάντα: ', now, ' Ενώ στις επόμενες: ', p1, ', ', p2);
-
-          content = '<b>' + title + '</b><br>' + 'Προβλέπουμε κίνηση: ' + prediction + ' άτομα στις 2 επόμενες ώρες και <br>Μέση Επισκεψιμότητα (έως 2 ώρες πριν): ' + median + ' άτομα';
-
-          this.getPopup().setLatLng(event.latlng).setContent(content);
-        }
-
         markersLayer.addLayer(marker);
       }
     });
-
-
-// /* Create Plateia Gewrgiou marker */
-// var marker2 = L.marker ([38.246242, 21.7350847], { draggable: "true", title: "Plateia Gewrgiou"});
-// marker2.addTo(searcheableMarkersLayer);
-
-// /*popup*/
-// marker2.bindPopup("<b>Πλατεία Γεωργίου</b><br>Ektimisi episk");
-// marker2.on("click", clickMarker);
-
   </script>
 </body>
 </html>
