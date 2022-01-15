@@ -148,45 +148,46 @@
               popup.setContent(content);
               marker.bindPopup(popup);
 
-              // let myCustomColour;
+              // Αλλάζουμε το χρώμα του marker ανάλογα με το prediction
+              let myCustomColour;
 
-              // if (prediction >= 0 && prediction <= 32)
-              // {
-              //   myCustomColour = "green";
-              // }
-              // else if (prediction >= 33 && prediction <= 65)
-              // {
-              //   myCustomColour = "yellow";
-              // }
-              // else if (prediction >= 66 && prediction <= 100)
-              // {
-              //   myCustomColour = "red";
-              // }
+              if (prediction >= 0 && prediction <= 32)
+              {
+                myCustomColour = "green";
+              }
+              else if (prediction >= 33 && prediction <= 65)
+              {
+                myCustomColour = "yellow";
+              }
+              else if (prediction >= 66 && prediction <= 100)
+              {
+                myCustomColour = "red";
+              }
 
-              // const markerHtmlStyles = `
-              //   background-color: ${myCustomColour};
-              //   width: 3rem;
-              //   height: 3rem;
-              //   display: block;
-              //   left: -1.5rem;
-              //   top: -1.5rem;
-              //   position: relative;
-              //   border-radius: 3rem 3rem 0;
-              //   transform: rotate(45deg);
-              //   border: 1px solid #FFFFFF`;
+              const markerHtmlStyles = `
+                background-color: ${myCustomColour};
+                width: 3rem;
+                height: 3rem;
+                display: block;
+                left: -1.5rem;
+                top: -1.5rem;
+                position: relative;
+                border-radius: 3rem 3rem 0;
+                transform: rotate(45deg);
+                border: 1px solid #FFFFFF`;
 
-              // const icon = L.divIcon({
-              //   className: "my-custom-pin",
-              //   iconAnchor: [0, 24],
-              //   labelAnchor: [-6, 0],
-              //   popupAnchor: [0, -36],
-              //   html: `<span style="${markerHtmlStyles}" />`
-              // })
-
-              // marker.setIcon(icon);
+              const icon = L.divIcon({
+                // className: "my-custom-pin",
+                iconAnchor: [0, 24],
+                labelAnchor: [-6, 0],
+                popupAnchor: [0, -36],
+                html: `<span style="${markerHtmlStyles}" />`
+              })
 
               // το κάνουμε ορατό
               markers[m].style.visibility = 'visible';
+
+              marker.setIcon(icon);
             }
           }
       });
