@@ -16,16 +16,19 @@
 <body>
 
 
-    <form  method="POST" action="loginsthBash.php">
+  <!--This code "onkeydown="return event.keyCode != 13;""is to disable the enter key from the form.For example if I fill all the fields and
+     I press enter nothing will happen.I will only have the options of login and SignUp! -->
+
+    <form  method="POST"  action="loginsthBash.php">
       <!-- USERNAME -->
       <p class="userInputs">Give a username:</p>
-      <input type="text" id="usernameId" name="username" placeholder="Type a username">
+      <input type="text" id="usernameId" name="username" placeholder="Type a username" onkeydown="return event.keyCode != 13;">
 
       <br><br>
 
       <!-- EMAIL -->
       <p class="userInputs" >Give your email</p>
-      <input type="email" id="emailId" name="email" placeholder="Type your email address">
+      <input type="email" id="emailId" name="email" placeholder="Type your email address" onkeydown="return event.keyCode != 13;">
       <br><br>
 
 
@@ -33,7 +36,7 @@
       <p class="userInputs">Give a password.It should contain at least :
           8 characters,one upper case letter,one number and a symbol(#,$,*,@)
       </p>
-      <input type="password" id="passwordId" name="password" placeholder="Type a password">
+      <input type="password" id="passwordId" name="password" placeholder="Type a password" onkeydown="return event.keyCode != 13;">
 
       <p id="StrengthMessage">Weak</p>
 
@@ -42,7 +45,11 @@
       <button type="submit" formaction="signupsthBash.php" id="signupId" style = "display:none;">SignUp</button>
 
 
-      <br>
+
+  <br>
+
+
+
 
 
     </form>
@@ -108,6 +115,10 @@
           }
 
         } );
+
+
+
+
 
 
     </script>
