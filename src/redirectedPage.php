@@ -7,6 +7,7 @@
 
  ?>
 
+
  <!DOCTYPE html>
  <html>
 
@@ -14,9 +15,17 @@
    <title>The map</title>
      <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
+
      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
      <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
      <link rel="stylesheet" href="./leaflet-search.src.css"/>
+
+     <!--For the user location button-->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+
+
 
    <style>
          #map {
@@ -33,6 +42,9 @@
          {
            visibility: hidden;
          }
+
+
+
    </style>
 
  </head>
@@ -43,8 +55,14 @@
    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
    <script src="./leaflet-search.src.js"></script>
 
+
    <!-- Κάναμε copy-paste τα περιεχόμενα του JSON starting_pois.json σε μια μεταβλητή (την const POIs) & με αυτό το script τη φορτώνουμε -->
    <script src="./POIs.js"></script>
+
+
+   <!--For the user location button-->
+   <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
 
    <script>
      // Ο κώδικας μας θα τρέξει μόλις είναι σίγουρο ότι έχει φορτώσει το DOM
@@ -214,6 +232,18 @@
          markersLayer.addLayer(marker);
        }
      });
+
+
+
+
+     //For the user location button
+     L.easyButton( '<img src="https://cdn-icons-png.flaticon.com/512/484/484167.png">', function(){
+                  alert('you just ckicked the button');
+                }, 'click for user location').addTo(map);
+
+
+
+
    </script>
  </body>
  </html>
