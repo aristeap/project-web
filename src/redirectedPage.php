@@ -20,9 +20,13 @@
      <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
      <link rel="stylesheet" href="./leaflet-search.src.css"/>
 
-     <!--For the user location button-->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css" />
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+     <!-- For the full screen option-->
+     <link rel="stylesheet" href="Control.FullScreen.css" />
+
+
+     <!-- For the user location by Leaflet plugin -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.css" />
 
 
 
@@ -45,6 +49,14 @@
 
 
 
+         .target{
+            font-size: 1.5em;
+          }
+
+
+
+
+
    </style>
 
  </head>
@@ -60,8 +72,13 @@
    <script src="./POIs.js"></script>
 
 
-   <!--For the user location button-->
-   <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+   <!-- For the full screen option-->
+   <script src="Control.FullScreen.js"></script>
+
+
+   <!-- For the user location by Leaflet plugin -->
+   <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
 
 
    <script>
@@ -70,9 +87,21 @@
        //
        // Create map
        //
-       var map = new L.Map('map', {zoom: 15, center: [38.2370706, 21.7345796] });            // set view
+       var map = new L.Map('map', {zoom: 15, center: [38.2370706, 21.7345796] });      // set view
        map.addLayer(new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'));  // base layer
 
+
+
+      //For the user location
+      var userLocation =  L.control.locate({
+              flyTo: 'true',
+              initialZoomLevel : '17'
+
+        });
+      //adding the user location to the map
+      userLocation.addTo(map);
+
+        //
        //
        // Markers Layers
        //
@@ -231,15 +260,10 @@
          var marker  = new L.Marker([coord.lat, coord.lng], {title: title});     // property searched
          markersLayer.addLayer(marker);
        }
-     });
 
 
+       });
 
-
-     //For the user location button
-     L.easyButton( '<img src="https://cdn-icons-png.flaticon.com/512/484/484167.png">', function(){
-                  alert('you just ckicked the button');
-                }, 'click for user location').addTo(map);
 
 
 
