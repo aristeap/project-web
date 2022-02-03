@@ -2,15 +2,7 @@
 <html>
 <head>
      <title>WebProject</title>
-
-     <style>
-        .userInputs
-        {
-           font-size: 150%;
-           background-color:  #c0904d;
-        }
-
-    </style>
+     <link rel="stylesheet" type="text/css" href="global.css">
 
 </head>
 <body>
@@ -18,27 +10,27 @@
 
   <!--This code "onkeydown="return event.keyCode != 13;""is to disable the enter key from the form.For example if I fill all the fields and
      I press enter nothing will happen.I will only have the options of login and SignUp! -->
-
+  <div class="form-container">
     <form  method="POST"  action="loginsthBash.php">
+      <ul class="list">
       <!-- USERNAME -->
-      <p class="userInputs">Give a username:</p>
-      <input type="text" id="usernameId" name="username" placeholder="Type a username" onkeydown="return event.keyCode != 13;">
+      <p id="welcomeTag">Welcome!</p>
+      <li><input type="text" id="usernameId" name="username" placeholder="Type a username" onkeydown="return event.keyCode != 13;"></li>
 
       <br><br>
 
       <!-- EMAIL -->
-      <p class="userInputs" >Give your email</p>
-      <input type="email" id="emailId" name="email" placeholder="Type your email address" onkeydown="return event.keyCode != 13;">
+
+      <li><input type="email" id="emailId" name="email" placeholder="Type your email address" onkeydown="return event.keyCode != 13;"></li>
       <br><br>
 
 
       <!-- PASSWORD -->
-      <p class="userInputs">Give a password.It should contain at least :
-          8 characters,one upper case letter,one number and a symbol(#,$,*,@)
-      </p>
-      <input type="password" id="passwordId" name="password" placeholder="Type a password" onkeydown="return event.keyCode != 13;">
 
-      <p id="StrengthMessage">Weak</p>
+      <li><input type="password" id="passwordId" name="password" placeholder="8 chars,1 upper case letter,one number and a symbol(#,$,*,@)" onkeydown="return event.keyCode != 13;"></li>
+
+      <p id="StrengthMessage">Weak</p><br>
+
 
       <!-- The button or the link to login or signup will only show up if the password is strong -->
       <button type="submit" id="passwordButton" formaction="loginsthBash.php" style = "display:none;">Login</button><br>
@@ -46,14 +38,8 @@
 
 
 
-  <br>
-
-
-
-
-
     </form>
-
+</ul>
 
     <script>
       let timeout;
