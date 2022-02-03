@@ -1,0 +1,77 @@
+*{margin: 0; padding:0}
+body{
+    background-color: #292826;
+    padding-top: 10vh;
+}
+
+
+.form-container{
+    width:500px;
+    height: 400px;
+    padding: 20px 30px;
+    background-color: #f9D342;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 #000;
+    margin: auto;
+
+}
+
+ul.list{
+  list-style-type: none;
+  text-align: center;
+}
+
+#welcomeTag{
+    text-align: center;
+    font-size: 50px;
+}
+
+
+
+
+ul.list li input{
+  width: 250px;
+  text-align: center;
+  padding: 8px 10px;
+  border: none;
+  background-color: #d3d3d3;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+}
+
+ul.list li input[type="password"]{
+  width: 400px;
+  text-align: center;
+  padding: 8px 10px;
+  border: none;
+  background-color: #d3d3d3;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+
+
+#passwordButton{
+  width: 100px;
+  align: center;
+  background-color: #353935;
+  color: #fff;
+  padding: 8px 10px;
+  display: inline-block;
+  float: left;
+  border-radius: 5px;
+
+}
+
+#signupId{
+  width: 100px;
+  align: center;
+  background-color: #353935;
+  color: #fff;
+  padding: 8px 10px;
+  display: inline-block;
+  float: right;
+  border-radius: 5px;
+
+}
